@@ -216,6 +216,7 @@ if st.button("Analyze"):
 
             st.subheader("🔍 Final Risk Score")
             st.write(f"**Risk Score:** {round(score, 2)} / 100")
+            base_risk_score = score
            
 
 
@@ -287,27 +288,40 @@ def score_news_risk(headlines):
 ticker = st.text_input("Enter stock ticker", "AAPL")
 
 if ticker:
-    # your existing risk calculations...
-    base_risk_score = total_risk_score  # whatever you already compute
+    try:
+        # your existing risk calculations...
+        score = 0
+        score += min(volatility * 100, 40)
+        score += min(abs(max_drawdown) * 100, 40)
+        score += 20 if beta and beta > 1.2 else 5
 
-    st.subheader("News & Sentiment")
+        st.subheader("🔍 Final Risk Score")
+        st.write(f"**Risk Score:** {round(score, 2)} / 100")
 
-    headlines = get_news_headlines(ticker)
-    news_risk, avg_sentiment, keyword_hits = score_news_risk(headlines)
+        # ⭐ Correct base risk score
+        base_risk_score = score
 
-    st.write(f"**Average news sentiment:** {avg_sentiment:.2f}")
-    st.write(f"**Risk keywords detected:** {keyword_hits}")
-    st.write(f"**News-based risk score:** {news_risk:.1f} / 100")
+        # ⭐ News & Sentiment section (now inside the same block)
+        st.subheader("News & Sentiment")
 
-    # Show headlines
-    for h in headlines:
-        st.markdown(f"- [{h['title']}]({h['link']})  \n  *{h['pub_date']}*")
+        headlines = get_news_headlines(ticker)
+        news_risk, avg_sentiment, keyword_hits = score_news_risk(headlines)
 
-    # Combine with your existing risk score
-    total_risk_with_news = min(100, base_risk_score + news_risk * 0.4)
+        st.write(f"**Average news sentiment:** {avg_sentiment:.2f}")
+        st.write(f"**Risk keywords detected:** {keyword_hits}")
+        st.write(f"**News-based risk score:** {news_risk:.1f} / 100")
 
-    st.subheader("Final Risk Score (with News)")
-    st.write(f"**Base risk:** {base_risk_score:.1f}")
-    st.write(f"**News adjustment:** {news_risk * 0.4:.1f}")
-    st.write(f"**Final risk score:** {total_risk_with_news:.1f} / 100")
+        # Show headlines
+        for h in headlines:
+            st.markdown(f"- [{h['title']}]({h['link']})  \n  *{h['pub_date']}*")
 
+        # Combine with your existing risk score
+        total_risk_with_news = min(100, base_risk_score + news_risk * 0.4)
+
+        st.subheader("Final Risk Score (with News)")
+        st.write(f"**Base risk:** {base_risk_score:.1f}")
+        st.write(f"**News adjustment:** {news_risk * 0.4:.1f}")
+        st.write(f"**Final risk score:** {total_risk_with_news:.1f} / 100")
+
+    except Exception as e:
+        st.error(f"Error: {e}")
