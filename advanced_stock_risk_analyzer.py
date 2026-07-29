@@ -31,24 +31,28 @@ def calculate_es(returns, confidence=0.95):
 analyzer = SentimentIntensityAnalyzer()
 
 def get_news_headlines(ticker, max_items=10):
-    url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}&lang=en-US"
+    def get_news_headlines(ticker, max_items=10):
+    api_key = def get_news_headlines(ticker, max_items=10):
+    api_key = Wr4D8qAmmOPADUCV5uSiSIy0SXSetIak
+    url = f"https://financialmodelingprep.com/api/v3/stock_news?tickers={ticker}&limit={max_items}&apikey={api_key}"
+
     try:
         resp = requests.get(url, timeout=5)
         resp.raise_for_status()
+        data = resp.json()
     except Exception:
         return []
 
-    soup = BeautifulSoup(resp.text, "xml")
-    items = soup.find_all("item")[:max_items]
-
     headlines = []
-    for item in items:
+    for item in data:
         headlines.append({
-            "title": item.title.text if item.title else "",
-            "link": item.link.text if item.link else "",
-            "pub_date": item.pubDate.text if item.pubDate else ""
+            "title": item.get("title", ""),
+            "link": item.get("url", ""),
+            "pub_date": item.get("publishedDate", "")
         })
+
     return headlines
+  
 
 RISK_KEYWORDS = [
     "lawsuit", "investigation", "fraud", "probe", "downgrade",
