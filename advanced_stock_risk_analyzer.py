@@ -31,8 +31,8 @@ def calculate_es(returns, confidence=0.95):
 analyzer = SentimentIntensityAnalyzer()
 
 def get_news_headlines(ticker, max_items=10):
-    def get_news_headlines(ticker, max_items=10):
     api_key = "Wr4D8qAmmOPADUCV5uSiSIy0SXSetIak"
+
     url = f"https://financialmodelingprep.com/api/v3/stock_news?tickers={ticker}&limit={max_items}&apikey={api_key}"
 
     try:
@@ -51,6 +51,7 @@ def get_news_headlines(ticker, max_items=10):
         })
 
     return headlines
+
   
 
 RISK_KEYWORDS = [
