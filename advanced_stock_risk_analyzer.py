@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import streamlit as st
 import yfinance as yf
 import numpy as np
@@ -153,7 +153,7 @@ if ticker:
     st.write(f"**Base risk:** {base_risk_score:.1f}")
     st.write(f"**News adjustment:** {news_risk * 0.4:.1f}")
     st.write(f"**Final risk score:** {total_risk_with_news:.1f} / 100")
-=======
+
 import streamlit as st
 import yfinance as yf
 import numpy as np
