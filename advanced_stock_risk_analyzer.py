@@ -131,7 +131,7 @@ ticker = st.text_input("Enter stock ticker", "AAPL")
 
 if ticker:
     # your existing risk calculations...
-    base_risk_score = total_risk_score  # whatever you already compute
+    base_risk_score = score  # whatever you already compute
 
     st.subheader("News & Sentiment")
 
@@ -216,7 +216,7 @@ if st.button("Analyze"):
 
             st.subheader("🔍 Final Risk Score")
             st.write(f"**Risk Score:** {round(score, 2)} / 100")
-            base_risk_score = score
+           
 
 
     except Exception as e:
