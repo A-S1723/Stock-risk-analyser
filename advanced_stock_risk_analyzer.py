@@ -310,4 +310,4 @@ if ticker:
     st.write(f"**Base risk:** {base_risk_score:.1f}")
     st.write(f"**News adjustment:** {news_risk * 0.4:.1f}")
     st.write(f"**Final risk score:** {total_risk_with_news:.1f} / 100")
->>>>>>> 923aea6e03863bd81625456e86f8c325f9965e27
+
